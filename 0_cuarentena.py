@@ -11,10 +11,10 @@ import codecs
 
 print('This is my twitter warbot')
 
-CONSUMER_KEY = '3WxtkVCXFn0a38VeRjFq715r7'
-CONSUMER_SECRET = 'tZf3sHkCaqUGpGGvAo2gZUZsDJH0hYVBVgR9emT19xykRm9i8p'
-ACCESS_KEY = '1148899975692242945-tXpRLE2hAdOyYvo1oFqacIbUEuV3WO'
-ACCESS_SECRET = 'ObjnrxRTdUgNjpXOqNcWE6OdhjUdX0qtE2n4TfPvmo6Lk'
+CONSUMER_KEY = '--------'
+CONSUMER_SECRET = '------'
+ACCESS_KEY = '-----'
+ACCESS_SECRET = '-----'
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
@@ -32,24 +32,13 @@ class Person:
 
 def muertes():
     L = []
-    Jugadores = ["By_Danimos", "TryOfBot", "rubeeenom", "helenaalg", "ramonru97",
-    "CoastLara", "anamtnz_","jadrianvd"]
-    M = [" intentado comprar papel del culo en el Mercadona.",
-    " mientras paseaba a una gallina con una correa para poder salir de casa.",
-    " mientras iba a por la cura para el Coronavirus.",
-    " porque no se pudo limpiar el culo al quedarse sin papel para limpiarlo.",
-    " en una pelea loca por el ultimo paquete de arroz.",
-    " intentado comprar papel del culo en el Mercadona.",
-    " mientras paseaba a una gallina con una correa para poder salir de casa.",
-    " mientras iba a por la cura para el Coronavirus."]
-    M2 = [" porque no se pudo limpiar el culo al quedarse sin papel para limpiarlo.",
-    " en una pelea loca por el ultimo paquete de arroz.",
-    " intentado comprar papel del culo en el Mercadona.",
-    " mientras paseaba a una gallina con una correa para poder salir de casa.",
-    " mientras iba a por la cura para el Coronavirus.",
-    " porque no se pudo limpiar el culo al quedarse sin papel para limpiarlo.",
-    " en una pelea loca por el ultimo paquete de arroz.",
-    " mientras paseaba a una gallina con una correa para poder salir de casa.",]
+    Jugadores = ["user1", "user2", "user3"]
+    M = [" user1's atack.",
+    " user2's atack.",
+    " user3's atack."]
+    M2 = [" user1's atack.",
+    " user2's atack.",
+    " user3's atack."]
     print (len(Jugadores), len(M), len(M2))
 
     Muertos = []
@@ -112,9 +101,9 @@ def muertes():
             muerte += 1; ataque += 1
             L[a].kills = int(L[a].kills) + 1
             print ("Siendo la muerte numero: " + str(muerte) + " y el ataque numero: " + str(ataque)+ "\n@" + L[a].name + " ha matado a @" + L[b].name + L[a].trucos[c] + "\n" + L[a].name + " lleva " + str(L[a].kills) + " kill(s).\nQuedan " + str(len(L) - 1) + " supervivientes! #WarBot")
-            #time.sleep(60)
+            time.sleep(60)
             print ("1 seg para publicar\n")
-            #api.update_status("Siendo la muerte numero: " + str(muerte) + " y el ataque numero: " + str(ataque)+ "\n@" + L[a].name + " ha matado a @" + L[b].name + L[a].trucos[c] + "\n" + L[a].name + " lleva " + str(L[a].kills) + " kill(s).\nQuedan " + str(len(L) - 1) + " supervivientes! #WarBot")
+            api.update_status("Siendo la muerte numero: " + str(muerte) + " y el ataque numero: " + str(ataque)+ "\n@" + L[a].name + " ha matado a @" + L[b].name + L[a].trucos[c] + "\n" + L[a].name + " lleva " + str(L[a].kills) + " kill(s).\nQuedan " + str(len(L) - 1) + " supervivientes! #WarBot")
             Muertos.append(L[b].name)
             L.pop(b)
             f = open("muertos.txt", "a")
@@ -123,9 +112,9 @@ def muertes():
         else:
             ataque += 1
             print ("Siendo el ataque numero: " + str(ataque) + "\n@" + L[a].name + " ha herido a @" + L[b].name + L[a].trucos[c] + "\n" + L[b].name + " tiene: " + str(L[b].age) + " vidas.\nQuedan " + str(len(L)) + " supervivientes! #WarBot")
-            #time.sleep(60)
+            time.sleep(60)
             print ("1 seg para publicar\n")
-            #api.update_status("Siendo el ataque numero: " + str(ataque) + "\n@" + L[a].name + " ha herido a @" + L[b].name + L[a].trucos[c] + "\n" + L[b].name + " tiene: " + str(L[b].age) + " vidas.\nQuedan " + str(len(L)) + " supervivientes! #WarBot")
+            api.update_status("Siendo el ataque numero: " + str(ataque) + "\n@" + L[a].name + " ha herido a @" + L[b].name + L[a].trucos[c] + "\n" + L[b].name + " tiene: " + str(L[b].age) + " vidas.\nQuedan " + str(len(L)) + " supervivientes! #WarBot")
         f = open("fichero.txt", "w")
         for k in range(len(L)):
             a = L[k].name; b = L[k].age; c = L[k].kills; d = L[k].trucos[0]; e = L[k].trucos[1]
@@ -139,20 +128,20 @@ def muertes():
         f.write("1")
         f.close()
         if len(L) == 5 and j == 0:
-            #api.update_status("Quedan cinco supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name + " @" + L[3].name + " @" + L[4].name)
+            api.update_status("Quedan cinco supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name + " @" + L[3].name + " @" + L[4].name)
             print ("Quedan cinco supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name + " @" + L[3].name + " @" + L[4].name)
             j += 1
         elif len(L) == 4:
             j = 0
         elif len(L) == 3 and j == 0:
-            #api.update_status("Quedan tres supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name)
+            api.update_status("Quedan tres supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name)
             print ("Quedan tres supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name)
             j += 1
         elif len(L) == 1:
             print ("Tenemos un ganador!! El ganador es... @" + L[0].name)
             print ("Enhorabuena por el top 3 a: @" + Muertos[-1] + " @" + Muertos[-2] + "\nMuchas gracias a todas y a todos por participar!!")
-            #api.update_status("Tenemos un ganador!! El ganador es... @" + L[0].name)
-            #api.update_status("Enhorabuena por el top 3 a: @" + Muertos[-1] + " @" + Muertos[-2] + "\nMuchas gracias a todas y a todos por participar!!")
+            api.update_status("Tenemos un ganador!! El ganador es... @" + L[0].name)
+            api.update_status("Enhorabuena por el top 3 a: @" + Muertos[-1] + " @" + Muertos[-2] + "\nMuchas gracias a todas y a todos por participar!!")
         f = open("contador.txt", "w")
         i += 1
         f.write(str(i) + "\n")
@@ -164,10 +153,10 @@ def muertes():
 
         if i % 16 == 0:
             print ("Descansito ")
-            #time.sleep(60*60*8)
+            time.sleep(60*60*8)
             #time.sleep(60)
 
-        #time.sleep(59*60)
+        time.sleep(59*60)
 
         i += 1
         print (i)
