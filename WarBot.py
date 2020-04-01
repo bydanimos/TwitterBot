@@ -11,15 +11,18 @@ import codecs
 
 print('This is my twitter warbot')
 
+# Estas claves se le piden a Twitter para poder funcionar el bot
 CONSUMER_KEY = '--------'
 CONSUMER_SECRET = '------'
 ACCESS_KEY = '-----'
 ACCESS_SECRET = '-----'
 
+# Linkeamos las claves a la api, para poder Twitear
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
+# Clase que va a contener a cada jugador
 class Person:
   def __init__(self, name, age):
     self.name = name
@@ -31,7 +34,9 @@ class Person:
 
 
 def muertes():
+    # Array de 'Person' que va a contener a los jugadores
     L = []
+    # User de los jugadores que van a participar para poder mencionalos
     Jugadores = ["user1", "user2", "user3"]
     M = [" user1's atack.",
     " user2's atack.",
@@ -42,23 +47,37 @@ def muertes():
     print (len(Jugadores), len(M), len(M2))
 
     Muertos = []
+    
+    # Abrimos el archivo para saber si es la primera ejecucion o ya hubo 
+    # previas y es para restaurar la partida o continuar con la misma
     f = codecs.open("escoger.txt", "r", "utf-8")
     lista = []
     dato = f.readline()
+    # No leemos toda la linea ya que el salto de linea para que no nos moleste
     lista.append(dato[:-1])
     f.close()
     print (str(dato))
+    
+    # Si es la primera ejecución se cargan los datos de 'Jugadores' con
+    # sus ataques, 3 vidas y 0 asesinatos
     if str(lista[0]) ==  "0":
         k = 0
         while k < len(Jugadores):
+            # Metemos una nueva instancia de jugadores con su nombre y 3 vidas
             L.append(Person(Jugadores[k], 3))
+            # Agregamos los dos trucos
             L[k].agregar_truco(M[k])
             L[k].agregar_truco(M2[k])
+            # Ponemos 0 asesinatos
             L[k].kills = 0
 
+            # Imprimimos para ver que funciono bien
             print (L[k].name, L[k].age, L[k].trucos[0], L[k].trucos[1], L[k].kills)
             k += 1
+    # En caso de ser para restaurar la partida en un punto se leen el resto de los
+    # archivos
     else:
+        # Abrimos el archivo que contiene los usuarios con sus datos (vidas, kills y ataques)
         f = codecs.open("fichero.txt", "r", "utf-8")
         dato = f.readlines()
         L = []
@@ -76,6 +95,9 @@ def muertes():
                   k += 5
                   print (L[x].name, L[x].age, L[x].trucos[0], L[x].trucos[1], L[x].kills)
             f.close()
+    
+    # Abrimos el archivo que contiene las variables i, j, ataque y muerte para iniciar la
+    # partida
     f = open("contador.txt", "r")
     dato = f.readlines()
     contadores = []
@@ -88,13 +110,16 @@ def muertes():
     print (i, j, ataque, muerte)
     f.close()
 
+    # Iniciamos el bucle que va a ejecutar el programa publicando los ataques
     while len(L) > 1:
-
+        # Igualamos 'a' a 'b' para asegurarnos que despues no lo sean
         a = b = 0
+        # Calculamos los nuevos valores de 'a' y 'b'
         while a == b:
             a = random.randint(0, len(L) - 1)
             b = random.randint(0, len(L) - 1)
             c = random.randint(0, 1)
+        # Restamos una vida al jugador que va a ser atacado
         L[b].age = int(L[b].age) - 1
         print (a, b, c)
         if L[b].age == 0:
