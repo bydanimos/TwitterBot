@@ -32,7 +32,7 @@ class Person:
   def agregar_truco(self, truco):
         self.trucos.append(truco)
 
-
+# Función principal para ayudar a la moduladidad
 def muertes():
     # Array de 'Person' que va a contener a los jugadores
     L = []
@@ -46,6 +46,7 @@ def muertes():
     " user3's atack."]
     print (len(Jugadores), len(M), len(M2))
 
+    # Array con los muertos
     Muertos = []
     
     # Abrimos el archivo para saber si es la primera ejecucion o ya hubo 
@@ -122,6 +123,7 @@ def muertes():
         # Restamos una vida al jugador que va a ser atacado
         L[b].age = int(L[b].age) - 1
         print (a, b, c)
+        # Si no tiene más vidas twiteamos mensaje de muerte
         if L[b].age == 0:
             muerte += 1; ataque += 1
             L[a].kills = int(L[a].kills) + 1
@@ -129,17 +131,22 @@ def muertes():
             time.sleep(60)
             print ("1 seg para publicar\n")
             api.update_status("Siendo la muerte numero: " + str(muerte) + " y el ataque numero: " + str(ataque)+ "\n@" + L[a].name + " ha matado a @" + L[b].name + L[a].trucos[c] + "\n" + L[a].name + " lleva " + str(L[a].kills) + " kill(s).\nQuedan " + str(len(L) - 1) + " supervivientes! #WarBot")
+            # Lo añadimos al array de muertos
             Muertos.append(L[b].name)
+            # Lo quitamos del array de vivos
             L.pop(b)
+            # Lo guardamos en el fichero para saber quienes ya murieron
             f = open("muertos.txt", "a")
             f.write(Muertos[-1] + "\n")
             f.close()
+        # Si tiene ms vidas twiteamos mensaje de ataque
         else:
             ataque += 1
             print ("Siendo el ataque numero: " + str(ataque) + "\n@" + L[a].name + " ha herido a @" + L[b].name + L[a].trucos[c] + "\n" + L[b].name + " tiene: " + str(L[b].age) + " vidas.\nQuedan " + str(len(L)) + " supervivientes! #WarBot")
             time.sleep(60)
             print ("1 seg para publicar\n")
             api.update_status("Siendo el ataque numero: " + str(ataque) + "\n@" + L[a].name + " ha herido a @" + L[b].name + L[a].trucos[c] + "\n" + L[b].name + " tiene: " + str(L[b].age) + " vidas.\nQuedan " + str(len(L)) + " supervivientes! #WarBot")
+        # Guardamos la situación actual de la partida en 'fichero.txt'
         f = open("fichero.txt", "w")
         for k in range(len(L)):
             a = L[k].name; b = L[k].age; c = L[k].kills; d = L[k].trucos[0]; e = L[k].trucos[1]
@@ -149,24 +156,31 @@ def muertes():
             f.write(str(d) + "\n")
             f.write(str(e) + "\n")
         f.close()
+        # Ponemos que si se vuelve a ejecutar el programa hay que reestablecer la partida
         f = open("escoger.txt", "w")
         f.write("1")
         f.close()
+        # En caso de quedar 5 jugadores y ser la primera vez en la partida que ocurre se dice quienes quedan
         if len(L) == 5 and j == 0:
             api.update_status("Quedan cinco supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name + " @" + L[3].name + " @" + L[4].name)
             print ("Quedan cinco supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name + " @" + L[3].name + " @" + L[4].name)
             j += 1
+        # Si ya se redujo el número de participantes se reinicia 'j' para cuando queden tres
         elif len(L) == 4:
             j = 0
+        # Si quedan tres participantes y es la primera vez que ocurre se dice quieres quedan
         elif len(L) == 3 and j == 0:
             api.update_status("Quedan tres supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name)
             print ("Quedan tres supervivientes, atentos!!\nSuerte a: @" + L[0].name + " @" + L[1].name + " @" + L[2].name)
             j += 1
+        # Se dice quien es el ganador y se le da la En Hora Buena a los dos siguientes clasificados
         elif len(L) == 1:
             print ("Tenemos un ganador!! El ganador es... @" + L[0].name)
             print ("Enhorabuena por el top 3 a: @" + Muertos[-1] + " @" + Muertos[-2] + "\nMuchas gracias a todas y a todos por participar!!")
             api.update_status("Tenemos un ganador!! El ganador es... @" + L[0].name)
             api.update_status("Enhorabuena por el top 3 a: @" + Muertos[-1] + " @" + Muertos[-2] + "\nMuchas gracias a todas y a todos por participar!!")
+        # Se guardan las variables 'i, j, ataque, muerte' en el fichero 'contador.txt' para
+        # restablecer la partida en el punto actual
         f = open("contador.txt", "w")
         i += 1
         f.write(str(i) + "\n")
@@ -176,6 +190,7 @@ def muertes():
         f.write(str(muerte) + "\n")
         f.close()
 
+        # Si ya pasaron las 16 horas (de 9:00 AM a 24:00 PM) me duermo toda la noche
         if i % 16 == 0:
             print ("Descansito ")
             time.sleep(60*60*8)
@@ -186,4 +201,5 @@ def muertes():
         i += 1
         print (i)
 
+# Llamamos a la función para que comience el ataque
 muertes()
